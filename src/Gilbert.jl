@@ -11,7 +11,7 @@ space-filling, starting at `CartesianIndex(1,1)`.  It will end at
 (or the closest feasible point).
 """
 gilbertindices(dims::Tuple{Int,Int}; kwargs...) =
-    gilbertorder(CartesianIndices(dims))
+    gilbertorder(CartesianIndices(dims); kwargs...)
 
 
 """
