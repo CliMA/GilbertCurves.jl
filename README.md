@@ -1,6 +1,6 @@
-# Gilbert.jl
+# GilbertCurves.jl
 
-[![Build Status](https://github.com/CliMA/Gilbert.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/CliMA/Gilbert.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/CliMA/GilbertCurves.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/CliMA/GilbertCurves.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 This is a Julia implementation of the generalized Hilbert ("gilbert") space-filling curve algorithm, by Jakub Červený (https://github.com/jakubcerveny/gilbert).
 It provides space-filling curves for ectangular domains of arbitrary (non-power-of-two) sizes. Currently only 2D domains are supported, but it could be extended to 3D.
@@ -11,7 +11,7 @@ It provides space-filling curves for ectangular domains of arbitrary (non-power-
 Currently it exports one function, `gilbertindices` which returns a vector of
 `CartesianIndex{2}` objects corresponding to their order on the curve:
 ```julia
-julia> using Gilbert
+julia> using GilbertCurves
 
 julia> list = gilbertindices((5,5))
 25-element Vector{CartesianIndex{2}}:
@@ -32,11 +32,11 @@ julia> list = gilbertindices((5,5))
  CartesianIndex(5, 1)
 ```
 
-Two non-exported functions are also provided. `Gilbert.linearindices` takes the output of
+Two non-exported functions are also provided. `GilbertCurves.linearindices` takes the output of
 `gilbertindices`, returning an integer-valued matrix of the gilbert indices of each component.
 
 ```julia
-julia> Gilbert.linearindices(list)
+julia> GilbertCurves.linearindices(list)
 5×5 Matrix{Int64}:
   1   4   5   6   7
   2   3  10   9   8
@@ -45,11 +45,11 @@ julia> Gilbert.linearindices(list)
  25  20  19  16  15
 ```
 
-`Gilbert.gilbertorder` constructs a vector containing the elements of a matrix in the
+`GilbertCurves.gilbertorder` constructs a vector containing the elements of a matrix in the
 gilbert curve order.
 
 ```julia
-julia> Gilbert.gilbertorder(reshape(1:9,3,3))
+julia> GilbertCurves.gilbertorder(reshape(1:9,3,3))
 9-element Vector{Int64}:
  1
  4
@@ -71,7 +71,7 @@ julia> list = gilbertindices((67,29));
 
 julia> plot([c[1] for c in list], [c[2] for c in list], line_z=1:length(list), legend=false)
 ```
-![Gilbert curve on 67 x 29 elements](https://raw.githubusercontent.com/CliMA/Gilbert.jl/master/img/67x29.png)
+![Gilbert curve on 67 x 29 elements](https://raw.githubusercontent.com/CliMA/GilbertCurves.jl/master/img/67x29.png)
 
 # Notes
 
@@ -84,4 +84,4 @@ julia> list = gilbertindices((15,12));
 julia> plot([c[1] for c in list], [c[2] for c in list], line_z=1:length(list), legend=false)
 ```
 
-![Gilbert curve on 15 x 12 elements](https://raw.githubusercontent.com/CliMA/Gilbert.jl/master/img/15x12.png)
+![Gilbert curve on 15 x 12 elements](https://raw.githubusercontent.com/CliMA/GilbertCurves.jl/master/img/15x12.png)

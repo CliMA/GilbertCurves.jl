@@ -1,4 +1,4 @@
-module Gilbert
+module GilbertCurves
 
 export gilbertindices
 

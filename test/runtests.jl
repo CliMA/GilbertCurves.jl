@@ -1,4 +1,4 @@
-using Gilbert
+using GilbertCurves
 using Test
 
 @testset "size $m,$n" for m = 1:20, n = 1:20
@@ -30,7 +30,7 @@ using Test
         @test ndiag == 0
     end
     
-    L = Gilbert.linearindices(list)
+    L = GilbertCurves.linearindices(list)
     @test !any(iszero, L)
     @test sum(L) == sum(1:m*n)
 end
