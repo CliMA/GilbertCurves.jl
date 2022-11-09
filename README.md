@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/CliMA/GilbertCurves.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/CliMA/GilbertCurves.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 This is a Julia implementation of the generalized Hilbert ("gilbert") space-filling curve algorithm, by Jakub Červený (https://github.com/jakubcerveny/gilbert).
-It provides space-filling curves for ectangular domains of arbitrary (non-power-of-two) sizes. Currently only 2D domains are supported, but it could be extended to 3D.
+It provides space-filling curves for rectangular domains of arbitrary (non-power-of-two) sizes. Currently only 2D domains are supported, but it could be extended to 3D.
 
 
 # Usage
