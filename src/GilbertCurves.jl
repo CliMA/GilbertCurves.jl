@@ -33,6 +33,7 @@ end
 # 3D ordering
 function gilbertorder(mat::AbstractArray{T, 3}; majdim=findmax(size(mat))) where {T}
     list = sizehint!(T[], length(mat))
+    
     if majdim == 1
         append_gilbert!(list, mat)
     elseif majdim == 2
@@ -92,7 +93,6 @@ end
 
 # 3D ordering
 function append_gilbert!(list, mat::AbstractArray{T, 3}) where {T}
-
     a,b,c = size(mat)
 
     if sum((a, b, c) .== 1) > 1
@@ -120,6 +120,9 @@ function append_gilbert!(list, mat::AbstractArray{T, 3}) where {T}
     elseif 3c > 4b
         a2 = div(a,2)
         c2 = div(c,2)
+        if isodd(a2) && a > 2
+            a2 += 1
+        end
         if isodd(c2) && c > 2
             c2 += 1
         end
@@ -131,6 +134,12 @@ function append_gilbert!(list, mat::AbstractArray{T, 3}) where {T}
         a2 = div(a,2)
         b2 = div(b,2)
         c2 = div(c,2)
+        if isodd(a2) && a > 2
+            a2 += 1
+        end
+        if isodd(b2) && b > 2
+            b2 += 1
+        end
         if isodd(c2) && c > 2
             c2 += 1
         end
