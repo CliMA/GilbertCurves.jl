@@ -34,3 +34,13 @@ using Test
     @test !any(iszero, L)
     @test sum(L) == sum(1:m*n)
 end
+
+@testset "size $m,$n,$p" for m = 1:20, n = 1:20, p = 1:20
+    list = gilbertindices((m,n,p))
+    @test length(list)         == m*n*p
+    @test length(unique(list)) == m*n*p
+    @test list[1]              == CartesianIndex(1,1,1)
+
+    L = GilbertCurves.linearindices(list)
+    @test !any(iszero, L)
+end
