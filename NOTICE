@@ -11,3 +11,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+This package implements the generalized Hilbert space-filling curve
+algorithm by Jakub Červený (https://github.com/jakubcerveny/gilbert),
+distributed under the BSD-2-Clause license, Copyright (c) 2018, Jakub
+Červený.
