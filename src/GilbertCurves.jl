@@ -1,35 +1,91 @@
+"""
+    GilbertCurves
+
+Generalized Hilbert ("Gilbert") space-filling curves for rectangular domains of
+arbitrary size, based on the algorithm by Jakub Červený
+(https://github.com/jakubcerveny/gilbert).
+"""
 module GilbertCurves
 
 export gilbertindices
 
 """
-    gilbertindices(dims::Tuple{Int,Int}; majdim=dims[1] >= dims[2] ? 1 : 2)
+    gilbertindices(dims::Tuple{Int,Int}; majdim = dims[1] >= dims[2] ? 1 : 2)
 
-Constructs a vector of `CartesianIndex` objects, orderd by a generalized Hilbert
-space-filling, starting at `CartesianIndex(1,1)`.  It will end at
-`CartesianIndex(dims[1],1)` if `majdim==1`, or `CartesianIndex(1,dims[2])` if `majdim==2`
-(or the closest feasible point).
+Construct a vector of `CartesianIndex` objects ordered by a generalized Hilbert
+space-filling curve.
+
+The sequence starts at `CartesianIndex(1, 1)` and ends at
+`CartesianIndex(dims[1], 1)` if `majdim == 1`, or `CartesianIndex(1, dims[2])`
+if `majdim == 2` (or the closest feasible point).
+
+# Arguments
+- `dims`: dimensions of the grid.
+
+# Keyword Arguments
+- `majdim = dims[1] >= dims[2] ? 1 : 2`: the major dimension of the traversal
+  (1 or 2); defaults to the larger dimension.
+
+# Examples
+```julia
+julia> gilbertindices((2,2))
+4-element Vector{CartesianIndex{2}}:
+ CartesianIndex(1, 1)
+ CartesianIndex(1, 2)
+ CartesianIndex(2, 2)
+ CartesianIndex(2, 1)
+```
+
+See also [`gilbertorder`](@ref), [`linearindices`](@ref).
 """
 gilbertindices(dims::Tuple{Int,Int}; kwargs...) =
     gilbertorder(CartesianIndices(dims); kwargs...)
 
 
 """
-    gilbertorder(mat::AbstractMatrix; majdim=size(mat,1) >= size(mat,2) ? 1 : 2)
+    gilbertorder(mat::AbstractMatrix; majdim = size(mat,1) >= size(mat,2) ? 1 : 2)
 
-Constructs a vector of the elements of `mat`, ordered by a generalized Hilbert
-space-filling curve. The list will start at `mat[1,1]`, and end at `mat[end,1]` if
-`majdim==1` or `mat[1,end]` if `majdim==2`  (or the closest feasible point).
+Construct a vector of the elements of `mat`, ordered by a generalized Hilbert
+space-filling curve.
+
+The list starts at `mat[1,1]`, and ends at `mat[end,1]` if `majdim == 1` or
+`mat[1,end]` if `majdim == 2` (or the closest feasible point).
+
+# Arguments
+- `mat`: the matrix to traverse.
+
+# Keyword Arguments
+- `majdim = size(mat,1) >= size(mat,2) ? 1 : 2`: the major dimension of the
+  traversal (1 or 2); defaults to the larger dimension.
+
+See also [`gilbertindices`](@ref).
 """
 function gilbertorder(mat::AbstractMatrix{T}; majdim=size(mat,1) >= size(mat,2) ? 1 : 2) where {T}
     list = sizehint!(T[], length(mat))
+    # the recursion in append_gilbert! has no base case for empty blocks
+    if isempty(mat)
+        return list
+    end
     if majdim == 1
         append_gilbert!(list, mat)
     else
         append_gilbert!(list, permutedims(mat,(2,1)))
     end
+    return list
 end
 
+"""
+    append_gilbert!(list, mat::AbstractMatrix)
+
+Recursively append the elements of `mat` to `list` in generalized Hilbert curve
+order, traversing along the first dimension of `mat`.
+
+The matrix is split into two or three blocks, transposed as needed so that each
+block is again traversed along its first dimension. When the larger dimension
+is odd and the smaller even, checkerboard parity makes the required corner
+endpoint unreachable by an orthogonal path, and the curve contains one diagonal
+step (see the README).
+"""
 function append_gilbert!(list, mat::AbstractMatrix)
     # 1 |*    |
     #   | )   |
@@ -80,8 +136,10 @@ end
 """
     linearindices(list::Vector{CartesianIndex{2}})
 
-Construct an integer matrix `M` containing the integers `1:length(list)` such that
-`M[list[i]] == i`.
+Construct an integer matrix `M` containing the integers `1:length(list)` such
+that `M[list[i]] == i`.
+
+See also [`gilbertindices`](@ref).
 """
 function linearindices(list::Vector{CartesianIndex{2}})
     cmax = maximum(list)
