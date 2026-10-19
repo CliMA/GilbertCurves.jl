@@ -14,8 +14,8 @@ rectangles. Currently only 2D domains are supported.
 | **License** | [![license][license-img]][license-url]     |
 | **Tests**   | [![gha ci][gha-ci-img]][gha-ci-url]        |
 
-[version-img]: https://juliahub.com/docs/General/GilbertCurves/stable/version.svg
-[version-url]: https://juliahub.com/ui/Packages/General/GilbertCurves
+[version-img]: https://img.shields.io/github/v/release/CliMA/GilbertCurves.jl
+[version-url]: https://github.com/CliMA/GilbertCurves.jl/releases
 [license-img]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
 [license-url]: LICENSE
 [gha-ci-img]: https://github.com/CliMA/GilbertCurves.jl/actions/workflows/CI.yml/badge.svg?branch=main
